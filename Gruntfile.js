@@ -1,8 +1,3 @@
-global.t = function(txt) {
-    return txt;
-};
-
-
 module.exports = function(grunt) {
 
     process.on('uncaughtException',function(e) {
@@ -21,11 +16,8 @@ module.exports = function(grunt) {
         }
     });
 
-
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
-
-    // These plugins provide necessary tasks.
 
     grunt.registerTask('default', [
         'jshint','jasmine_nodejs'
