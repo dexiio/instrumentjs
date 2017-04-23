@@ -88,6 +88,42 @@ describe('InstrumentJS', function() {
         expect(beforeInvocations[1].args).toEqual(['1', '2', '3']);
     });
 
+    fit('can instrument constructor and all methods  and emit when they are called', function() {
+
+        var MyType = function(val) {
+            this.test = val;
+        };
+
+        MyType.prototype.doSomething = function() {
+
+        };
+
+        MyType.prototype.doThis = function() {
+            return this.test;
+        };
+
+        MyType = InstrumentJS.instrumentType(MyType, 'MyType');
+
+        var myInstance = new MyType('A');
+
+        expect(beforeInvocations.length).toBe(1);
+        expect(afterInvocation.length).toBe(1);
+        expect(beforeInvocations[0].name).toBe('MyType');
+        expect(beforeInvocations[0].args).toEqual(['A']);
+
+        myInstance.doSomething(1);
+        expect(myInstance.doThis(2)).toBe('A');
+
+        expect(beforeInvocations.length).toBe(3);
+        expect(afterInvocation.length).toBe(3);
+
+        expect(beforeInvocations[1].name).toBe('MyType.doSomething');
+        expect(beforeInvocations[1].args).toEqual(['1']);
+
+        expect(beforeInvocations[2].name).toBe('MyType.doThis');
+        expect(beforeInvocations[2].args).toEqual(['2']);
+    });
+
     it('does not record when disabled', function() {
         InstrumentJS.disable();
 

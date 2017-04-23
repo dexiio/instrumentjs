@@ -36,17 +36,37 @@ InstrumentJS.instrumentMethod(myObject, 'myMethod', 'myObject');
 
 myObject.myMethod();
 
+
 //Instrument all functions on object
-function MyType() {
+var myObject = {
+  myMethod: function() {},
+  doSomething: function() {}
+};
 
-}
+InstrumentJS.instrumentObject(myObject, 'myObject');
 
-MyType.prototype.myMethod = function() {};
+myObject.myMethod();
+myObject.doSomething();
 
-InstrumentJS.instrumentObject(MyType.prototype, 'MyType');
 
-var instance = new MyType();
-instance.myMethod();
+//Instrument constructor
+var MyType = function(val) {
+    this.test = val;
+};
+
+MyType.prototype.doSomething = function() {
+
+};
+
+MyType.prototype.doThis = function() {
+    return this.test;
+};
+
+MyType = InstrumentJS.instrumentType(MyType, 'MyType');
+
+var myInstance = new MyType('A');
+myInstance.doSomething();
+myInstance.doThis();
 
 ```
 

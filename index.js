@@ -94,12 +94,26 @@ _.extend(InstrumentJS, {
             return value;
         });
     },
+    instrumentType: function(constructor, name) {
+        var instrumentedConstructor = this.instrumentFunction(name, constructor);
+        instrumentedConstructor.prototype = this.instrumentObject(constructor.prototype, name);
+
+        return instrumentedConstructor;
+    },
     instrumentMethod: function(obj, functionName, objectName) {
         var methodName = objectName ? objectName + '.' + functionName : functionName;
 
         obj[functionName] = InstrumentJS.instrumentFunction(methodName, obj[functionName]);
     },
     instrumentFunction: function(functionName, func) {
+        if (typeof functionName !== 'string') {
+            throw new Error('Function name must be a string');
+        }
+
+        if (typeof func !== 'function') {
+            throw new Error('Function must be a function');
+        }
+
         return function() {
             if (!InstrumentJS._enabled) {
                 //Quick exit
