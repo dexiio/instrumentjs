@@ -88,7 +88,7 @@ describe('InstrumentJS', function() {
         expect(beforeInvocations[1].args).toEqual(['1', '2', '3']);
     });
 
-    fit('can instrument constructor and all methods  and emit when they are called', function() {
+    it('can instrument constructor and all methods  and emit when they are called', function() {
 
         var MyType = function(val) {
             this.test = val;
