@@ -1,0 +1,15 @@
+{
+  "name": "instrumentjs",
+  "version": "1.0.0",
+  "author": "Henrik von Hofmeister",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-jasmine-nodejs": "^1.6.0",
+    "jasmine-node": "^1.14.5",
+    "q": "^1.5.0"
+  }
+}
